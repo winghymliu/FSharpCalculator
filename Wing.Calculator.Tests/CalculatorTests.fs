@@ -18,18 +18,9 @@ module module1 =
                 StackContents [1.0;2.0;3.0;] |> should equal (StackContents [1.0;2.0;3.0;]);
                 push 1.0 (StackContents []) |> should equal (StackContents [1.0]);
                 push 1.0 (StackContents [2.0]) |> should equal (StackContents [1.0;2.0]);
+//                pop (StackContents []) |> ignore |> should throw typeof<Wing.Brain.Brain.StackOverflowException>
+                pop (StackContents [2.0]) |> should equal (2.0, StackContents []);
 
         [<Test>] member test.
-         Square ()=
-            Square 5 |> should equal 25;
-            Square 0 |> should equal 0;
-            Square 1.5 |> should equal 2.25;
-            WorkOnList [1;2;3;4;5] |> should equal ["1";"2";"3";"4";"5"]
-
-        [<Test>] member test.
-          Add () = 
-            Add 0 0 |> should equal 0;
-            Add 0 1 |> should equal 1;
-            Add 1 1 |> should equal 2;
-            Add 2 1 |> should equal 3;
-            Add 1 2 |> should equal 3;
+            Eval()=
+               Eval (StackContents [1.0;])( StackContents []) |> should equal 1.0;
