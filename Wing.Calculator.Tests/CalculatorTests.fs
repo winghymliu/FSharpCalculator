@@ -19,8 +19,10 @@ module module1 =
                 push 1.0 (StackContents []) |> should equal (StackContents [1.0]);
                 push 1.0 (StackContents [2.0]) |> should equal (StackContents [1.0;2.0]);
 //                pop (StackContents []) |> ignore |> should throw typeof<Wing.Brain.Brain.StackOverflowException>
-                pop (StackContents [2.0]) |> should equal (2.0, StackContents []);
-
-        [<Test>] member test.
-            Eval()=
-               Eval (StackContents [1.0;])( StackContents []) |> should equal 1.0;
+                  pop (StackContents [2.0; 1.0]) |> should equal (2.0, StackContents [1.0]);
+                  pop (StackContents [2.0]) |> should equal (2.0, StackContents List.empty<float>);
+//
+//        [<Test>] member test.
+//            Eval()=
+//               Eval (StackContents [1.0;])( StackContents []) |> should equal 1.0;
+//               Eval (StackContents [5.0;])( StackContents []) |> should equal 5.0;
