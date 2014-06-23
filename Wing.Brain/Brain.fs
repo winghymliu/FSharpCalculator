@@ -3,6 +3,7 @@
 module Brain =
 
     exception StackOverflowException of string
+    exception UnknownTokenException of string
 //    type StackContents<'T> = 'T list
     type Stack<'T> = StackContents of 'T list
 //    type InputStack = StackContents of string list
@@ -20,21 +21,25 @@ module Brain =
             | [] -> 
                 raise (StackOverflowException("stack overflow"))
 //    
-//    let GetFinalResult results input = 
-//          let (res, remainder) = pop results
-//          res    
+    let GetFinalResult results input = 
+          let (res, remainder) = pop results
+          res    
 //        
-//    let rec Eval results inputs = 
-//        match inputs with 
-//            | StackContents [] -> GetFinalResult results inputs
-//            | _ -> let (newResults , newInput) = EvalHelper results inputs
-//                   Eval newResults newInput 
-//        
-//    let EvalHelper results inputs =
-//        let (input, newInputs) = pop inputs
-//        match input with 
-//            | "1.0" -> push 1.0 results
-//            | "2.0" -> push 2.0 results
-//            | "+" ->  (pop results + pop results)
+    let EvalHelper results inputs =
+        let (input, newInputs) = pop inputs
+        match input with 
+            | "+" ->  let (left, newResults1) = pop results
+                      let (right, newResults2) = pop newResults1
+                      (push (left + right) newResults2), newInputs
+            | _ ->               
+                push (float input) results, newInputs
+
+    let rec Eval results inputs = 
+        match inputs with 
+            | StackContents [] -> GetFinalResult results inputs
+            | _ -> let (newResults , newInput) = EvalHelper results inputs
+                   Eval newResults newInput 
+        
+
 //    
 //

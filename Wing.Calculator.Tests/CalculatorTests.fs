@@ -22,7 +22,9 @@ module module1 =
                   pop (StackContents [2.0; 1.0]) |> should equal (2.0, StackContents [1.0]);
                   pop (StackContents [2.0]) |> should equal (2.0, StackContents List.empty<float>);
 //
-//        [<Test>] member test.
-//            Eval()=
-//               Eval (StackContents [1.0;])( StackContents []) |> should equal 1.0;
-//               Eval (StackContents [5.0;])( StackContents []) |> should equal 5.0;
+        [<Test>] member test.
+            Eval()=
+               Eval (StackContents [1.0;])( StackContents []) |> should equal 1.0;
+               Eval (StackContents [5.0;])( StackContents []) |> should equal 5.0;
+               Eval (StackContents [5.0;1.0;])( StackContents ["+"]) |> should equal 6.0;
+               Eval (StackContents [])( StackContents ["2.0";"1.0";"+"]) |> should equal 3.0;
