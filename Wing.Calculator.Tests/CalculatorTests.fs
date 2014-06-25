@@ -7,13 +7,13 @@ open Wing.Brain.Brain
 module module1 =
     
     [<TestFixture>]
-    type ``Calculate Tests`` ()=
+    type ``Stack Tests`` ()=
 
         let WorkOnList x = List.map (fun (x) -> x.ToString()) x;
         let lame x = List.head x;
            
         [<Test>] member test.
-            Stack()=
+            ``Stack``()=
                 StackContents [] |> should equal (StackContents []);
                 StackContents [1.0;2.0;3.0;] |> should equal (StackContents [1.0;2.0;3.0;]);
                 push 1.0 (StackContents []) |> should equal (StackContents [1.0]);
@@ -26,5 +26,5 @@ module module1 =
             Eval()=
                Eval (StackContents [1.0;])( StackContents []) |> should equal 1.0;
                Eval (StackContents [5.0;])( StackContents []) |> should equal 5.0;
-               Eval (StackContents [5.0;1.0;])( StackContents ["+"]) |> should equal 6.0;
-               Eval (StackContents [])( StackContents ["2.0";"1.0";"+"]) |> should equal 3.0;
+               Eval (StackContents [5.0;1.0;])( StackContents [Op "+"]) |> should equal 6.0;
+               Eval (StackContents [])( StackContents [Num 2.0; Num 1.0; Op "+"]) |> should equal 3.0;

@@ -7,6 +7,9 @@ module Brain =
 //    type StackContents<'T> = 'T list
     type Stack<'T> = StackContents of 'T list
 //    type InputStack = StackContents of string list
+    type inputs = 
+        | Num of float 
+        | Op of string
     
     let EMPTY = StackContents []
 //        
@@ -28,11 +31,12 @@ module Brain =
     let EvalHelper results inputs =
         let (input, newInputs) = pop inputs
         match input with 
-            | "+" ->  let (left, newResults1) = pop results
+            | Op o -> let (left, newResults1) = pop results
                       let (right, newResults2) = pop newResults1
                       (push (left + right) newResults2), newInputs
+            | Num x -> push (float x) results, newInputs
             | _ ->               
-                push (float input) results, newInputs
+                raise (System.Exception("Unknown input"))
 
     let rec Eval results inputs = 
         match inputs with 
