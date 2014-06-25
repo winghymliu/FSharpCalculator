@@ -26,5 +26,5 @@ module module1 =
             Eval()=
                Eval (StackContents [1.0;])( StackContents []) |> should equal 1.0;
                Eval (StackContents [5.0;])( StackContents []) |> should equal 5.0;
-               Eval (StackContents [5.0;1.0;])( StackContents [Op "+"]) |> should equal 6.0;
-               Eval (StackContents [])( StackContents [Num 2.0; Num 1.0; Op "+"]) |> should equal 3.0;
+               Eval (StackContents [5.0;1.0;])( StackContents [Op Plus]) |> should equal 6.0;
+               Eval (StackContents [])( StackContents [Num 2.0; Num 1.0; Op Plus]) |> should equal 3.0;

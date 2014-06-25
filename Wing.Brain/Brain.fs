@@ -7,10 +7,16 @@ module Brain =
 //    type StackContents<'T> = 'T list
     type Stack<'T> = StackContents of 'T list
 //    type InputStack = StackContents of string list
+    type OpType =
+        | Plus
+        | Minus
+        | Div
+        | Mul
+    
     type inputs = 
         | Num of float 
-        | Op of string
-    
+        | Op of OpType
+        
     let EMPTY = StackContents []
 //        
     let push x stack =
@@ -32,11 +38,13 @@ module Brain =
         let (input, newInputs) = pop inputs
         match input with 
             | Op o -> let (left, newResults1) = pop results
-                      let (right, newResults2) = pop newResults1
-                      (push (left + right) newResults2), newInputs
-            | Num x -> push (float x) results, newInputs
-            | _ ->               
-                raise (System.Exception("Unknown input"))
+                      let (right, newResults2) = pop newResults1  
+                      match o with 
+                        | Plus -> (push (left + right) newResults2), newInputs                        
+                        | Minus -> (push (left - right) newResults2), newInputs
+                        | Div -> (push (left / right) newResults2), newInputs
+                        | Mul -> (push (left * right) newResults2), newInputs
+            | Num x -> push (float x) results, newInputs            
 
     let rec Eval results inputs = 
         match inputs with 
