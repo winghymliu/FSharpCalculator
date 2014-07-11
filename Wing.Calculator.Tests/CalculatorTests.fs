@@ -42,3 +42,12 @@ module module1 =
         [<Test>] member test.
             ``Evaluating an empty result stack and an input stack with two numbers and a plus operator should return the sum of the two numbers``()=               
                Eval (StackContents [])( StackContents [Num 2.0; Num 1.0; Op Plus]) |> should equal 3.0;
+
+ [<TestFixture>]
+    type ``Calculator tests`` ()=
+        [<Test>] member test.
+            ``No inputs should return 0``()=
+               Calculate EMPTY |> should equal 0.0;
+        [<Test>] member test.
+            ``1.0 1.0 + should return 2.0``()=
+               Calculate (StackContents [Num 1.0;Num 1.0; Op Plus;]) |> should equal 2.0;

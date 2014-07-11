@@ -52,6 +52,9 @@ module Brain =
             | _ -> let (newResults , newInput) = EvalHelper results inputs
                    Eval newResults newInput 
         
-
+    let Calculate inputs =
+        match inputs with 
+            | (StackContents []) -> 0.0
+            | _ -> Eval (StackContents []) inputs
 //    
 //
